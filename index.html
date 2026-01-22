@@ -61,7 +61,6 @@
       padding:56px 20px 64px;
     }
 
-    /* Hero (kept calm) */
     .hero{
       text-align:center;
       padding: 0 0 18px;
@@ -91,10 +90,9 @@
       margin: 22px 0 34px;
     }
 
-    /* Make left column slightly narrower than right (fix empty/overfull) */
     .grid{
       display:grid;
-      grid-template-columns: 0.38fr 0.62fr; /* key fix */
+      grid-template-columns: 0.38fr 0.62fr;
       gap:56px;
       align-items:start;
     }
@@ -118,7 +116,6 @@
       font-weight:500;
     }
 
-    /* Left column blocks to fill the space */
     .profile-card{
       display:flex;
       gap:14px;
@@ -169,7 +166,6 @@
       line-height:1.7;
     }
 
-    /* Apple-like link list with chevron */
     .linklist{
       margin:14px 0 0;
       padding:0;
@@ -190,7 +186,6 @@
       transform: translateY(-1px);
     }
 
-    /* Publications: compact + expandable details */
     .pubs{
       margin:14px 0 0;
       padding:0;
@@ -212,6 +207,14 @@
     }
     .pub-title strong{font-weight:700}
     .pub-title em{font-weight:600}
+
+    .pub-meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13.5px;
+      line-height:1.75;
+    }
+    .pub-meta a{word-break:break-all}
 
     .pub-one-liner{
       margin:8px 0 0;
@@ -247,8 +250,8 @@
       color:var(--muted);
       font-size:13.5px;
       line-height:1.75;
+      max-width: 78ch;
     }
-    .pub-details a{word-break:break-all}
 
     .footer{
       margin-top:52px;
@@ -285,7 +288,7 @@
 
     <section class="grid">
 
-      <!-- LEFT: richer, to avoid being too empty -->
+      <!-- LEFT -->
       <aside class="section">
         <h2>Profile</h2>
 
@@ -317,7 +320,7 @@
         </ul>
       </aside>
 
-      <!-- RIGHT: compact by default, expandable for details -->
+      <!-- RIGHT -->
       <div class="section">
         <h2>Recent Publications</h2>
 
@@ -330,15 +333,22 @@
               <em>IEEE Transactions on Information Forensics and Security (TIFS)</em>,
               20: 7764–7776, 2025.
             </p>
+
+            <!-- Code / Paper OUTSIDE details (your request) -->
+            <div class="pub-meta">
+              Code: <a href="https://github.com/Aitchson-Hwang/adversarial_visible_watermarking" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/adversarial_visible_watermarking</a><br/>
+              Paper: <a href="https://ieeexplore.ieee.org/abstract/document/11095771" target="_blank" rel="noreferrer">https://ieeexplore.ieee.org/abstract/document/11095771</a>
+            </div>
+
             <p class="pub-one-liner">
               Information-hiding–based protection for visible watermarks with improved robustness and minimal visual impact.
             </p>
+
+            <!-- Description ONLY inside details -->
             <details>
-              <summary>Show details</summary>
+              <summary>Description</summary>
               <div class="pub-details">
-                Code: <a href="https://github.com/Aitchson-Hwang/adversarial_visible_watermarking" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/adversarial_visible_watermarking</a><br/>
-                Paper: <a href="https://ieeexplore.ieee.org/abstract/document/11095771" target="_blank" rel="noreferrer">https://ieeexplore.ieee.org/abstract/document/11095771</a><br/><br/>
-                Description: Proposes an information-hiding–based protection mechanism for visible watermarks, improving robustness against removal and manipulation while preserving visual fidelity; includes a reproducible implementation for benchmarking.
+                Proposes an information-hiding–based protection mechanism for visible watermarks, improving robustness against removal and manipulation while preserving visual fidelity; includes a reproducible implementation for benchmarking.
               </div>
             </details>
           </li>
@@ -350,15 +360,20 @@
               <em>Neural Networks</em>,
               2025, 183: 106961.
             </p>
+
+            <div class="pub-meta">
+              Code: <a href="https://github.com/Aitchson-Hwang/MNet" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/MNet</a><br/>
+              Paper: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906" target="_blank" rel="noreferrer">https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906</a>
+            </div>
+
             <p class="pub-one-liner">
               Multi-scale restoration network for visible watermark removal, emphasizing detail recovery and artifact suppression.
             </p>
+
             <details>
-              <summary>Show details</summary>
+              <summary>Description</summary>
               <div class="pub-details">
-                Code: <a href="https://github.com/Aitchson-Hwang/MNet" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/MNet</a><br/>
-                Paper: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906" target="_blank" rel="noreferrer">https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906</a><br/><br/>
-                Description: Introduces a multi-scale restoration network for visible watermark removal, emphasizing detail recovery and artifact suppression across diverse watermark patterns, with open-source code for reproducible evaluation.
+                Introduces a multi-scale restoration network for visible watermark removal, emphasizing detail recovery and artifact suppression across diverse watermark patterns, with open-source code for reproducible evaluation.
               </div>
             </details>
           </li>
@@ -370,13 +385,15 @@
               <em>Journal of Software</em>,
               Accepted (in Chinese).
             </p>
+
             <p class="pub-one-liner">
               Speaker-information–guided audio adversarial attacks targeting effective yet perceptually plausible perturbations.
             </p>
+
             <details>
-              <summary>Show details</summary>
+              <summary>Description</summary>
               <div class="pub-details">
-                Description: Studies speaker-information–guided audio adversarial attacks to improve effectiveness while maintaining perceptual plausibility and speaker traits under practical threat settings.
+                Studies speaker-information–guided audio adversarial attacks to improve effectiveness while maintaining perceptual plausibility and speaker traits under practical threat settings.
               </div>
             </details>
           </li>
