@@ -5,109 +5,263 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Wenhong Huang</title>
   <meta name="description" content="Wenhong Huang — Vision-Language Models, Watermarking, Image Restoration, Adversarial Attacks." />
+
+  <!-- 商业感更强的无衬线：Manrope + Inter；保留 JetBrains Mono 仅用于代码/链接等 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
   <style>
     :root{
-      --bg:#080c18; --card:#0f172d; --text:#e9efff; --muted:#8fa1c9;
-      --border:rgba(122,162,255,.2); --shadow:0 18px 40px rgba(0,0,0,.32);
-      --radius:16px; --max:980px; --accent:#7aa2ff; --grid:rgba(122,162,255,.08);
+      /* 基础配色：深色更“高级”更稳，增加品牌渐变 */
+      --bg:#070A14;
+      --card: rgba(255,255,255,.05);
+      --card2: rgba(255,255,255,.075);
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+
+      --border:rgba(255,255,255,.12);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius:18px;
+      --max:980px;
+
+      /* 品牌色：蓝紫 + 青绿，做高级渐变 */
+      --accent:#7C9CFF;
+      --accent2:#9B7CFF;
+      --accent3:#37D6B3;
+
+      --grid:rgba(124,156,255,.08);
+      --ring: rgba(124,156,255,.35);
+
+      --font-sans: "Manrope", "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }
+
     @media (prefers-color-scheme: light){
-      :root{--bg:#f2f4ff; --card:#ffffff; --text:#0c1222; --muted:#54627a;
-        --border:rgba(45,91,255,.2); --shadow:0 12px 28px rgba(16,24,40,.12); --accent:#2d5bff; --grid:rgba(45,91,255,.12);}
+      :root{
+        --bg:#F4F7FF;
+        --card: rgba(255,255,255,.86);
+        --card2: rgba(255,255,255,.96);
+        --text:#0B1222;
+        --muted:rgba(11,18,34,.68);
+
+        --border:rgba(18,36,74,.12);
+        --shadow: 0 12px 28px rgba(16,24,40,.12);
+        --accent:#2D5BFF;
+        --accent2:#6C4DFF;
+        --accent3:#10B981;
+        --grid:rgba(45,91,255,.10);
+        --ring: rgba(45,91,255,.25);
+      }
     }
+
     *{box-sizing:border-box}
+    html,body{height:100%}
+
     body{
-      margin:0; color:var(--text); background:var(--bg);
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      line-height:1.7;
+      margin:0;
+      color:var(--text);
+      background:var(--bg);
+      font-family: var(--font-sans);
+      line-height:1.65;
+
+      /* 更高级的背景：网格 + 多色柔光 */
       background:
+        radial-gradient(1000px 520px at 12% -10%, color-mix(in oklab, var(--accent) 55%, transparent), transparent 58%),
+        radial-gradient(900px 520px at 105% 10%, color-mix(in oklab, var(--accent3) 40%, transparent), transparent 60%),
+        radial-gradient(900px 520px at 60% 120%, color-mix(in oklab, var(--accent2) 28%, transparent), transparent 60%),
         linear-gradient(0deg, var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-        radial-gradient(1000px 520px at 15% -10%, rgba(122,162,255,.28), transparent 55%),
-        radial-gradient(900px 520px at 110% 10%, rgba(139,255,207,.18), transparent 55%),
         var(--bg);
-      background-size: 34px 34px, 34px 34px, auto, auto, auto;
+      background-size: auto, auto, auto, 34px 34px, 34px 34px, auto;
     }
+
     a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:var(--max); margin:0 auto; padding:36px 18px 54px}
+    a:hover{text-decoration:none}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:40px 18px 56px}
+
+    /* 卡片：玻璃质感 + 渐变描边 */
     .card{
-      background: color-mix(in oklab, var(--card) 92%, transparent);
+      position:relative;
+      background: var(--card);
       border:1px solid var(--border);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      padding:22px;
+      padding:24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow:hidden;
     }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:calc(var(--radius) + 1px);
+      padding:1px;
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 70%, transparent),
+        color-mix(in oklab, var(--accent2) 55%, transparent),
+        color-mix(in oklab, var(--accent3) 55%, transparent)
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.6;
+    }
+
     .card-header{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
       flex-wrap:wrap;
+      position:relative;
+      z-index:1;
     }
+
+    /* 标题更商业：大写可保留，但减少“硬核”，用渐变文字 */
+    .section-title{
+      margin:0 0 12px;
+      font-size:14px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-weight:700;
+      font-family: "Inter", var(--font-sans);
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color:transparent;
+    }
+
     .counter{
       display:flex;
       align-items:center;
       gap:10px;
       font-size:13px;
       color:var(--muted);
-      border:1px dashed var(--border);
+      border:1px solid color-mix(in oklab, var(--border) 75%, transparent);
       border-radius:999px;
-      padding:6px 12px;
-      background: color-mix(in oklab, var(--bg) 45%, transparent);
+      padding:7px 12px;
+      background: color-mix(in oklab, var(--card2) 70%, transparent);
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--ring) 18%, transparent);
     }
     .counter strong{
       color:var(--text);
-      font-weight:600;
+      font-weight:700;
+      font-family:"Inter", var(--font-sans);
     }
+
     .top{
       display:grid;
-      grid-template-columns: 140px 1fr;
-      gap:18px;
+      grid-template-columns: 150px 1fr;
+      gap:20px;
       align-items:center;
+      margin-top:16px;
+      position:relative;
+      z-index:1;
     }
     @media (max-width:640px){ .top{grid-template-columns:1fr; text-align:center} }
+
     .avatar{
-      width:140px; height:140px; border-radius:18px; overflow:hidden;
+      width:150px; height:150px;
+      border-radius:20px;
+      overflow:hidden;
       border:1px solid var(--border);
-      background: color-mix(in oklab, var(--card) 90%, transparent);
+      background: color-mix(in oklab, var(--card2) 85%, transparent);
       margin:0 auto;
+      box-shadow: 0 16px 32px rgba(0,0,0,.22);
+      position:relative;
+    }
+    .avatar::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(120px 120px at 20% 15%, rgba(255,255,255,.22), transparent 55%);
+      pointer-events:none;
     }
     .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+
     h1{
       margin:0;
-      font-size:28px;
-      letter-spacing:.4px;
-      font-family: "Inter", system-ui, sans-serif;
+      font-size:30px;
+      letter-spacing:.2px;
+      font-weight:800;
+      font-family:"Inter", var(--font-sans);
     }
-    .meta{margin:6px 0 0; color:var(--muted)}
-    .links{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    .meta{margin:8px 0 0; color:var(--muted); font-weight:500}
+
+    .links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px
+    }
+
+    /* 更高级的 pill：轻微渐变 + 悬浮提升 */
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px; border-radius:999px;
-      border:1px solid var(--border);
-      background: color-mix(in oklab, var(--bg) 35%, transparent);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid color-mix(in oklab, var(--border) 80%, transparent);
+      background:
+        linear-gradient(180deg,
+          color-mix(in oklab, var(--card2) 92%, transparent),
+          color-mix(in oklab, var(--card) 92%, transparent)
+        );
       font-size:14px;
+      font-weight:600;
+      color: color-mix(in oklab, var(--text) 92%, var(--accent) 8%);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
-    .about{margin-top:16px; color:var(--muted)}
-    .footer{margin-top:18px; color:var(--muted); font-size:13px}
-    .section-title{
-      margin:0 0 12px;
-      font-size:18px;
-      letter-spacing:.3px;
-      text-transform:uppercase;
+    .pill:hover{
+      transform: translateY(-1px);
+      border-color: color-mix(in oklab, var(--accent) 55%, var(--border) 45%);
+      box-shadow: 0 16px 34px rgba(0,0,0,.22);
+      text-decoration:none;
     }
+
+    /* 关于文本：更干净的商业排版 */
+    .about{
+      margin-top:14px;
+      color:var(--muted);
+      font-weight:500;
+      max-width: 62ch;
+    }
+
+    .footer{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+    }
+
     .pubs{margin:0; padding-left:18px}
-    .pubs li{margin:12px 0}
+    .pubs li{
+      margin:14px 0;
+      padding:12px 12px 12px 14px;
+      border-left: 3px solid color-mix(in oklab, var(--accent) 55%, transparent);
+      background: color-mix(in oklab, var(--card2) 65%, transparent);
+      border-radius: 12px;
+    }
+    .pubs strong{font-weight:800; font-family:"Inter", var(--font-sans)}
+    .pubs em{font-weight:700}
     .pubs .code{
       display:block;
-      margin-top:6px;
+      margin-top:8px;
       color:var(--muted);
-      font-size:14px;
+      font-size:13px;
       word-break:break-all;
+      font-family: var(--font-mono);
+    }
+    .pubs .code a{
+      color: color-mix(in oklab, var(--accent) 85%, var(--text) 15%);
     }
   </style>
 </head>
@@ -124,7 +278,8 @@
           <strong><span id="busuanzi_value_site_pv">0</span></strong>
         </div>
       </div>
-      <div class="top" style="margin-top:16px">
+
+      <div class="top">
         <div class="avatar">
           <img src="assets/avatar.jpg" alt="Portrait of Wenhong Huang" />
         </div>
@@ -150,6 +305,7 @@
         </div>
       </div>
     </section>
+
     <section class="card" style="margin-top:16px">
       <h2 class="section-title">Recent Publications</h2>
 
@@ -189,7 +345,7 @@
             </a>
           </span>
         </li>
-        
+
         <li>
           Jiayuan Chen, <strong>Wenhong Huang (黄文弘)</strong>, Fangjun Huang,
           “High-performance audio adversarial attacks guided by speaker information” (说话人信息引导的高性能音频对抗攻击),
@@ -199,6 +355,7 @@
       </ol>
     </section>
   </main>
+
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
