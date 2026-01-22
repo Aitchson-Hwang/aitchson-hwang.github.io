@@ -8,31 +8,50 @@
 
   <style>
     :root{
-      /* Apple-like neutral palette */
-      --bg: #f5f5f7;
-      --card: rgba(255,255,255,.92);
-      --text: #1d1d1f;
-      --muted: rgba(29,29,31,.68);
-      --hairline: rgba(60,60,67,.18);
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      /* Apple-like palette (light) */
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#1d1d1f;
+      --muted:#6e6e73;
+      --border:#d2d2d7;
+
+      --accent:#06c;              /* Apple link blue */
+      --chip-bg:#e8e8ed;          /* system pill */
+      --chip-text:var(--accent);
+      --chip-hover:#dedee6;
+
+      --shadow: 0 10px 30px rgba(0,0,0,.07);
       --radius: 18px;
-      --max: 980px;
-      --accent: #0a84ff; /* Apple blue */
-      --chip: rgba(10,132,255,.10);
-      --chip-border: rgba(10,132,255,.22);
+
+      --max: 920px;
+      --pad: 32px;
+
+      --font:
+        -apple-system, BlinkMacSystemFont,
+        "SF Pro Display","SF Pro Text",
+        "Helvetica Neue", Helvetica, Arial,
+        "PingFang SC","Hiragino Sans GB","Microsoft YaHei",
+        system-ui, sans-serif;
+
+      --mono:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
     }
 
     @media (prefers-color-scheme: dark){
       :root{
-        --bg:#000000;
-        --card: rgba(28,28,30,.72);
+        --bg:#000;
+        --card:#1c1c1e;
         --text:#f5f5f7;
-        --muted: rgba(245,245,247,.68);
-        --hairline: rgba(235,235,245,.16);
-        --shadow: 0 14px 40px rgba(0,0,0,.55);
-        --accent:#0a84ff;
-        --chip: rgba(10,132,255,.16);
-        --chip-border: rgba(10,132,255,.28);
+        --muted:#a1a1a6;
+        --border:#2c2c2e;
+
+        --accent:#2997ff;          /* Apple blue (dark) */
+        --chip-bg:#2c2c2e;
+        --chip-text:#d7ebff;
+        --chip-hover:#3a3a3c;
+
+        --shadow: 0 16px 44px rgba(0,0,0,.55);
       }
     }
 
@@ -41,20 +60,13 @@
 
     body{
       margin:0;
-      color:var(--text);
       background:var(--bg);
-      line-height:1.6;
-
-      /* Apple-like typography: SF Pro via system font stack */
-      font-family:
-        -apple-system, BlinkMacSystemFont,
-        "SF Pro Display","SF Pro Text",
-        "Helvetica Neue", Helvetica, Arial,
-        "PingFang SC","Hiragino Sans GB","Microsoft YaHei",
-        system-ui, sans-serif;
+      color:var(--text);
+      font-family:var(--font);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+      line-height:1.55;
     }
 
     a{color:var(--accent); text-decoration:none}
@@ -63,31 +75,33 @@
     .wrap{
       max-width:var(--max);
       margin:0 auto;
-      padding:44px 18px 64px;
+      padding:56px 20px 72px;
     }
 
     .card{
       background:var(--card);
-      border:1px solid var(--hairline);
+      border:1px solid var(--border);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      padding:26px;
-      backdrop-filter: saturate(180%) blur(18px);
-      -webkit-backdrop-filter: saturate(180%) blur(18px);
+      padding:var(--pad);
     }
+    .card + .card{margin-top:18px}
 
+    /* Header: baseline aligned, Apple-like small caps label */
     .card-header{
       display:flex;
-      align-items:center;
+      align-items:baseline; /* key fix: baseline alignment */
       justify-content:space-between;
       gap:14px;
-      flex-wrap:wrap;
+      padding-bottom:18px;
+      border-bottom:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+      margin-bottom:22px;
     }
 
     .section-title{
       margin:0;
-      font-size:13px;
-      letter-spacing:.10em;
+      font-size:12px;
+      letter-spacing:.18em;
       text-transform:uppercase;
       color:var(--muted);
       font-weight:600;
@@ -99,58 +113,52 @@
       gap:10px;
       font-size:13px;
       color:var(--muted);
-      border:1px solid var(--hairline);
+      border:1px solid var(--border);
       border-radius:999px;
       padding:7px 12px;
-      background: rgba(255,255,255,.35);
+      background: color-mix(in oklab, var(--card) 92%, var(--bg));
+      font-variant-numeric: tabular-nums; /* numbers align */
+      white-space:nowrap;
     }
-    @media (prefers-color-scheme: dark){
-      .counter{ background: rgba(255,255,255,.06); }
-    }
-    .counter strong{
-      color:var(--text);
-      font-weight:600;
-    }
+    .counter strong{color:var(--text); font-weight:600}
 
-    .top{
+    /* Profile layout: strict grid alignment */
+    .profile-grid{
       display:grid;
-      grid-template-columns: 144px 1fr;
+      grid-template-columns: 132px 1fr;
       gap:22px;
-      align-items:center;
-      margin-top:18px;
+      align-items:flex-start; /* top align */
     }
-    @media (max-width:640px){
-      .top{grid-template-columns:1fr; text-align:center}
+    @media (max-width:720px){
+      .profile-grid{grid-template-columns:1fr; text-align:center}
+      .profile-right{display:flex; flex-direction:column; align-items:center}
     }
 
     .avatar{
-      width:144px; height:144px;
-      border-radius:20px;
+      width:132px; height:132px;
+      border-radius:22px;
       overflow:hidden;
-      border:1px solid var(--hairline);
-      background: rgba(255,255,255,.45);
-      margin:0 auto;
-    }
-    @media (prefers-color-scheme: dark){
-      .avatar{ background: rgba(255,255,255,.06); }
+      border:1px solid var(--border);
+      background: color-mix(in oklab, var(--card) 88%, var(--bg));
     }
     .avatar img{width:100%; height:100%; object-fit:cover; display:block}
 
     h1{
       margin:0;
-      font-size:30px;
-      letter-spacing:-0.02em; /* Apple-like tight */
+      font-size:32px;
+      letter-spacing:-0.02em; /* Apple tight */
       font-weight:700;
+      line-height:1.15;
     }
 
     .meta{
-      margin:10px 0 0;
+      margin-top:10px;
       color:var(--muted);
       font-size:15px;
       font-weight:500;
     }
 
-    .links{
+    .actions{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
@@ -160,67 +168,103 @@
     .pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      padding:9px 12px;
+      justify-content:center;
+      padding:10px 14px;
       border-radius:999px;
-      border:1px solid var(--chip-border);
-      background: var(--chip);
+      background:var(--chip-bg);
+      color:var(--chip-text);
       font-size:14px;
       font-weight:600;
-      color: var(--accent);
+      text-decoration:none;
+      border:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+      transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
     }
     .pill:hover{
+      background:var(--chip-hover);
       text-decoration:none;
-      filter: brightness(0.98);
+    }
+    .pill:focus-visible{
+      outline:none;
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 25%, transparent);
     }
 
     .about{
-      margin-top:16px;
+      margin:16px 0 0;
       color:var(--muted);
       font-size:15px;
-      max-width: 70ch;
+      max-width:70ch;
     }
 
-    .footer{
-      margin-top:16px;
+    .keywords{
+      margin-top:14px;
       color:var(--muted);
       font-size:13px;
     }
 
-    /* Publications */
-    .pubs{margin:0; padding-left:18px}
-    .pubs li{margin:16px 0}
-    .pubs li strong{font-weight:700}
-    .pubs em{font-weight:600}
-
-    .pub-meta{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:13px;
+    /* Publications: number column + content column ensures perfect alignment */
+    .pub-list{
+      margin:0;
+      padding:0;
+      list-style:none;     /* remove default ol indent */
+      display:flex;
+      flex-direction:column;
+      gap:18px;
     }
-    .pub-meta a{word-break:break-all}
+
+    .pub-item{
+      display:grid;
+      grid-template-columns: 28px 1fr; /* number + content */
+      gap:14px;
+      align-items:flex-start;
+    }
+
+    .pub-num{
+      color:var(--muted);
+      font-weight:600;
+      font-variant-numeric: tabular-nums;
+      text-align:right;
+      padding-top:2px; /* baseline tweak */
+    }
+
+    .pub-titleline{
+      font-size:15px;
+      line-height:1.55;
+      margin:0;
+    }
+
+    .pub-links{
+      margin-top:10px;
+      display:grid;
+      gap:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .pub-links code{
+      font-family:var(--mono);
+      font-size:12.5px;
+      background: color-mix(in oklab, var(--card) 85%, var(--bg));
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid color-mix(in oklab, var(--border) 65%, transparent);
+    }
 
     .pub-desc{
-      margin:10px 0 0;
+      margin-top:12px;
       padding:12px 14px;
       border-radius:14px;
-      border:1px solid var(--hairline);
-      background: rgba(255,255,255,.45);
-      color: var(--muted);
+      background: color-mix(in oklab, var(--card) 88%, var(--bg));
+      border:1px solid color-mix(in oklab, var(--border) 70%, transparent);
+      color:var(--muted);
       font-size:14px;
     }
-    @media (prefers-color-scheme: dark){
-      .pub-desc{ background: rgba(255,255,255,.06); }
-    }
-    .pub-desc b{
-      color: var(--text);
-      font-weight:600;
-    }
+    .pub-desc b{color:var(--text); font-weight:600}
   </style>
 </head>
 
 <body>
   <main class="wrap">
+
+    <!-- PROFILE -->
     <section class="card">
       <div class="card-header">
         <h2 class="section-title">Profile</h2>
@@ -232,16 +276,16 @@
         </div>
       </div>
 
-      <div class="top">
+      <div class="profile-grid">
         <div class="avatar">
           <img src="assets/avatar.jpg" alt="Portrait of Wenhong Huang" />
         </div>
 
-        <div>
+        <div class="profile-right">
           <h1>Wenhong Huang (黄文弘)</h1>
           <div class="meta">Ph.D. candidate · Sun Yat-sen University · Cyber Science and Technology</div>
 
-          <div class="links">
+          <div class="actions">
             <a class="pill" href="https://scholar.google.com/citations?hl=zh-CN&user=BTDGRJoAAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
             <a class="pill" href="https://github.com/Aitchson-Hwang" target="_blank" rel="noreferrer">GitHub</a>
             <a class="pill" href="mailto:huangwh79@mail2.sysu.edu.cn">Email</a>
@@ -252,78 +296,89 @@
             copyright protection for AIGC models, image restoration, and transferable adversarial attacks.
           </p>
 
-          <div class="footer">
+          <div class="keywords">
             Keywords: Vision-Language Models · Watermarking · Image Restoration · Adversarial Attacks
           </div>
         </div>
       </div>
     </section>
 
-    <section class="card" style="margin-top:16px">
-      <h2 class="section-title">Recent Publications</h2>
+    <!-- PUBLICATIONS -->
+    <section class="card">
+      <div class="card-header" style="margin-bottom:0">
+        <h2 class="section-title">Recent Publications</h2>
+        <div style="height:1px"></div>
+      </div>
+      <div style="height:22px"></div>
 
-      <ol class="pubs">
-        <li>
-          <strong>Wenhong Huang</strong>, Yunshu Dai, Jianwei Fei, Fangjun Huang,
-          “New Visible Watermark Protection Mechanism Based on Information Hiding”,
-          <em>IEEE Transactions on Information Forensics and Security (TIFS)</em>,
-          20: 7764–7776, 2025.
+      <div class="pub-list">
+        <!-- 1 -->
+        <div class="pub-item">
+          <div class="pub-num">1.</div>
+          <div>
+            <p class="pub-titleline">
+              <strong>Wenhong Huang</strong>, Yunshu Dai, Jianwei Fei, Fangjun Huang,
+              “New Visible Watermark Protection Mechanism Based on Information Hiding”,
+              <em>IEEE Transactions on Information Forensics and Security (TIFS)</em>,
+              20: 7764–7776, 2025.
+            </p>
 
-          <div class="pub-meta">
-            Code:
-            <a href="https://github.com/Aitchson-Hwang/adversarial_visible_watermarking" target="_blank" rel="noreferrer">
-              https://github.com/Aitchson-Hwang/adversarial_visible_watermarking
-            </a>
-            <br />
-            Paper:
-            <a href="https://ieeexplore.ieee.org/abstract/document/11095771" target="_blank" rel="noreferrer">
-              https://ieeexplore.ieee.org/abstract/document/11095771
-            </a>
+            <div class="pub-links">
+              <div>Code: <a href="https://github.com/Aitchson-Hwang/adversarial_visible_watermarking" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/adversarial_visible_watermarking</a></div>
+              <div>Paper: <a href="https://ieeexplore.ieee.org/abstract/document/11095771" target="_blank" rel="noreferrer">https://ieeexplore.ieee.org/abstract/document/11095771</a></div>
+            </div>
+
+            <div class="pub-desc">
+              <b>Description.</b>
+              Proposes an information-hiding–based protection mechanism for visible watermarks, improving robustness against removal and manipulation while preserving visual fidelity; includes a reproducible implementation for benchmarking.
+            </div>
           </div>
+        </div>
 
-          <div class="pub-desc">
-            <b>Description.</b>
-            Proposes an information-hiding–based protection mechanism for visible watermarks, aiming to improve robustness against removal and manipulation while preserving visual fidelity. Includes a reproducible implementation for evaluation and comparison.
+        <!-- 2 -->
+        <div class="pub-item">
+          <div class="pub-num">2.</div>
+          <div>
+            <p class="pub-titleline">
+              <strong>Wenhong Huang</strong>, Yunshu Dai, Jianwei Fei, Fangjun Huang,
+              “MNet: A Multi-Scale Network for Visible Watermark Removal”,
+              <em>Neural Networks</em>,
+              2025, 183: 106961.
+            </p>
+
+            <div class="pub-links">
+              <div>Code: <a href="https://github.com/Aitchson-Hwang/MNet" target="_blank" rel="noreferrer">https://github.com/Aitchson-Hwang/MNet</a></div>
+              <div>Paper: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906" target="_blank" rel="noreferrer">https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906</a></div>
+            </div>
+
+            <div class="pub-desc">
+              <b>Description.</b>
+              Introduces a multi-scale restoration network for visible watermark removal, emphasizing detail recovery and artifact suppression across diverse watermark patterns, with open-source code for reproducible evaluation.
+            </div>
           </div>
-        </li>
+        </div>
 
-        <li>
-          <strong>Wenhong Huang</strong>, Yunshu Dai, Jianwei Fei, Fangjun Huang,
-          “MNet: A Multi-Scale Network for Visible Watermark Removal”,
-          <em>Neural Networks</em>,
-          2025, 183: 106961.
+        <!-- 3 -->
+        <div class="pub-item">
+          <div class="pub-num">3.</div>
+          <div>
+            <p class="pub-titleline">
+              Jiayuan Chen, <strong>Wenhong Huang (黄文弘)</strong>, Fangjun Huang,
+              “High-performance audio adversarial attacks guided by speaker information” (说话人信息引导的高性能音频对抗攻击),
+              <em>Journal of Software (软件学报)</em>,
+              Accepted (已录用), In Chinese (中文论文).
+            </p>
 
-          <div class="pub-meta">
-            Code:
-            <a href="https://github.com/Aitchson-Hwang/MNet" target="_blank" rel="noreferrer">
-              https://github.com/Aitchson-Hwang/MNet
-            </a>
-            <br />
-            Paper:
-            <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906" target="_blank" rel="noreferrer">
-              https://www.sciencedirect.com/science/article/abs/pii/S0893608024008906
-            </a>
+            <div class="pub-desc">
+              <b>Description.</b>
+              Studies speaker-information–guided audio adversarial attacks to improve effectiveness while maintaining perceptual plausibility and speaker traits under practical threat settings.
+            </div>
           </div>
+        </div>
 
-          <div class="pub-desc">
-            <b>Description.</b>
-            Introduces a multi-scale restoration network for visible watermark removal, targeting better detail recovery and artifact suppression across diverse watermark patterns. Provides code to facilitate benchmarking and downstream reuse.
-          </div>
-        </li>
-
-        <li>
-          Jiayuan Chen, <strong>Wenhong Huang (黄文弘)</strong>, Fangjun Huang,
-          “High-performance audio adversarial attacks guided by speaker information” (说话人信息引导的高性能音频对抗攻击),
-          <em>Journal of Software (软件学报)</em>,
-          Accepted (已录用), In Chinese (中文论文).
-
-          <div class="pub-desc">
-            <b>Description.</b>
-            Studies audio adversarial attack generation with speaker-information guidance, improving attack effectiveness while maintaining perceptual plausibility and speaker characteristics, with emphasis on practical threat settings.
-          </div>
-        </li>
-      </ol>
+      </div>
     </section>
+
   </main>
 
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
